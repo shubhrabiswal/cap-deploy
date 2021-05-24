@@ -4,9 +4,10 @@ const shortid = require("shortid");
 const path = require("path");
 const multerS3 = require("multer-s3");
 const aws = require("aws-sdk");
+const env = require("dotenv")
 const User = require("../model/user");
 // const Auth = require("../router/auth");
-
+env.config();
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, path.join(path.dirname(__dirname), "uploads"));
@@ -16,8 +17,8 @@ const storage = multer.diskStorage({
   },
 });
 
-const accessKeyId = "AKIAZHZPWUIOLM66OAY6";
-const secretAccessKey = "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";
+const accessKeyId = process.env.accessKeyId;
+const secretAccessKey = process.env.secretAccessKey;
 
 const s3 = new aws.S3({
   accessKeyId,
